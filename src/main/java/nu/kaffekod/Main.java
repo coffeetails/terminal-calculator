@@ -18,7 +18,7 @@ public class Main {
             System.out.print("✦ ");
             String userInput = scanner.nextLine();
 
-            if (userInput.equalsIgnoreCase(":q")) {
+            if (userInput.equalsIgnoreCase(":q") || userInput.equalsIgnoreCase("q")) {
                 active = false; // Quit the app
             } else {
                 ArrayList<Object> arrayList = isMath(userInput);
@@ -37,7 +37,7 @@ public class Main {
      * @param numbers, operators The users input.
      */
     private static void calcIt(List<Double> numbers, List<String> operators) {
-        String calculation = String.format("→ %.0f", numbers.getFirst());
+        String calculation = String.format("╰ %.0f", numbers.getFirst());
         double result = numbers.getFirst();
         boolean showResult = true;
         int i = 1;
@@ -106,9 +106,11 @@ public class Main {
             }
         }
 
-        if (numbers.size() > operators.size()) {
+        if (numbers.size() == operators.size()+1 && !operators.isEmpty()) {
             arrays.add(numbers);
             arrays.add(operators);
+        } else {
+            failAttemptMessage("Woops, you need to write something like this: 5 + 5", "I still can't do math on that (￣ ￣|||)");
         }
 
         return arrays;
@@ -123,12 +125,6 @@ public class Main {
         System.out.println("Use only numbers and operators " + Arrays.toString(keys) + " with spaces in-between");
     }
 
-    /**
-     * Info message on how to use the app
-     */
-    private static void infoMessage() {
-        System.out.println("Plz use only numbers and operators " + Arrays.toString(keys) + " with spaces in-between");
-    }
 
     private static void failAttemptMessage(String firstMessage, String secondMessage) {
         failAttempts++;
@@ -136,10 +132,8 @@ public class Main {
             System.out.println(firstMessage);
         } else if (failAttempts == 3) {
             System.out.println(secondMessage);
-        } else if (failAttempts <= 4) {
-            System.out.println("Oh, come on  ヽ(`⌒´メ)ノ");
         } else {
-            System.out.println("What, what is happening with failAttemptMessage()? " + failAttempts);
+            System.out.println("Oh, come on  ヽ(`⌒ ´メ)ノ");
         }
     }
 }
